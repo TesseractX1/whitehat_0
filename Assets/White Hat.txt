@@ -1,0 +1,321 @@
+Name: "White Hat"
+Genre: RTS, Tower Defense, 2D
+Atmosphere: Cyberspace, Hacking
+Graphics: Basic, minimal (though "cybery") shapes.
+Platforms: PC, WebGL, Possibly Mobile in 2.0?
+Multiplayer: Maybe in 2.0
+
+----
+Gameplay:
+
+Gameplay is based on a hexagonal grid.
+There is no map in the beginning.
+The game starts out with the player having a Core unit at an arbitrary position. The player must expand their territory from there.
+Different construction units have varying ranges upon which further construction can be performed. (E.G, a Core unit allows construction within 3 cells away from it, Mines allow 2, etc.)
+Encircling an area with wall TOWERS marks the entire encircled area as habitable.
+Construction is limited by CPU and RAM, which are gathered by placing passive MINES, which must be placed a certain distance away from one another to function at greater efficiency.
+This encourages territorial expansion.
+Construction of higher tier units is unlocked by building and upgrading a DATABASE unit.
+Two types of resources exist: CPU and RAM. They are "mined" by the Core and their respective mine units.
+CPU is gained over time, and is spent on construction. It is gained gradually by CPU mines, as well as by the core.
+RAM is passive - it does not get earned over time or spent. It can be gained (or lost) by the construction or loss of RAM mines. You start out with an amount of RAM provided by the Core.
+Cell visibility is limited. Visible cells are outlined, however, those out of range are invisible. Visibility can be extended with any unit, but Observer units increase it especially.
+In 1.0 visibility only helps with spotting incoming enemy units, however, further use may be found down the line.
+Games are played in STAGES. Stages feature progressing difficulty. The only 1.0 gamemode will be a survival gamemode.
+
+There are three types of all UNITS:
+A. PASSIVE Units. Stationary units which do not inflict damage upon enemies.
+B. DEFENSE Units. Stationary units which inflict damage upon nearby enemies.
+C. ACTIVE Units. Moving units which traverse the grid at a certain pace and inflict damage or perform other functions.
+
+-----
+
+Actions:
+1. Building
+Clicking available area on empty cell opens up build menu. Circular hover menu around mouse shows up, listing available units. Hovering above a unit further reveals the units' available tiers.
+Upon selecting the tier, if the unit is directional, the unit along with its direction is visualized, and the direction of the unit must be selected before it is placed.
+Upon placement, the CPU and RAM are charged.
+
+2. Unit Interaction
+Clicking on a unit allows upgrading it or demolishing it.
+Upgrading a unit costs the unit's price subtracted from the upgraded unit's price.
+Demolishing a unit frees up the RAM, but does not return any CPU.
+
+-----
+
+Survival Gamemode:
+You start out with 64 RAM (from the Core unit,) and 64 CPU.
+Consists of a constant update of waves. Each wave has a progressive increase in difficulty. A wave is released every 90 seconds.
+Each wave is followed by a random release of enemy AI from one or more random general directions. The AI's aim is to destroy the player's Core unit.
+The player must protect said Core unit by constructing Passive and Defense units. We might add support for controlling Active units after 1.0.
+
+Enemy AI:
+Spawn 20 cells away from the core.
+Every three waves, the enemy AI attain an extra random position from which to approach, until 4 are reached.
+Enemy AI stick together into squadrons while moving, until they enter within 8 cells of the player's territory.
+Upon entering, they lose their squadron status and start properly attacking.
+Their ultimate goal is to attack the core. Melee units attempt to reach and attack it directly, but firing units maintain their distance.
+Their targeting system is similar to that of REPAIR Units. Targets are switched every 1 second, or if the targeted structure is destroyed.
+1. Core
+2. Highest Tier
+3. Least health
+
+-----
+
+PASSIVE Unit list:
+
+1. CORE
+Observation Range: 6
+Tier A:
+  Health: 32
+  Range: 3
+  Profit: 64 RAM, 32 CPU/Minute.
+  Cost: N/A
+Tier B:
+  Health: 64
+  Range: 3
+  Profit: 128 RAM, 64 CPU/Minute
+  Upgrade Cost: 0 RAM, 64 CPU
+Tier C:
+  Health: 128
+  Range: 3
+  Profit: 256 RAM, 128 CPU/Minute
+  Upgrade Cost: 0 RAM, 128 CPU
+
+The Core is the central element of a defensive player's army. It is stationary, has a construction range of 3 cells, and provides 100 CPU and 100 RAM.
+Upon its destruction, its owner loses the game. However, further versions may allow multiple cores to be constructed.
+
+2. TOWER
+Observation Range: 3
+Tier A:
+  Cost: 16 RAM, 16 CPU
+  Health: 16
+  Range: 1
+Tier B:
+  Cost: 16 RAM, 32 CPU
+  Health: 32
+  Range: 2
+Tier C:
+  Cost: 16 RAM, 64 CPU
+  Health: 64
+  Range: 3
+The Tower is a passive unit that allows WALL units to be constructed between Tower units.
+Clicking a Tower unit allows you to build another Tower unit of the same tier up to 4 cells away, with Wall units of the same tier filling up the space inbetween.
+(This does not save cost on the extra Tower unit or the Wall units.)
+
+3. WALL
+Observation Range: N/A
+Tier A:
+  Cost: 4 RAM, 1 CPU
+  Health: 8
+  Range: 0
+Tier B:
+  Upgrade Cost:
+  Cost: 4 RAM, 2 CPU
+  Health: 16
+  Range: 0
+Tier C:
+  Cost: 4 RAM, 4 CPU
+  Health: 32
+  Range: 0
+WALL units can only be constructed (or reconstructed) between Tower units, however, Wall units are not affected when one of their associated towers is destroyed.
+
+(Mine Properties: Both CPU and RAM mines must be placed a distance away from each other (and the Core) to maintain maximum performance.
+Performance is unaffected at a distance of 4 cells. 3 Cells cuts both mines' performance by 1/4, 2 cells by 2/4, etc. Additional mines will further lower performance of their nearby mines.)
+
+4. RAM Mine
+Observation Range: 3
+Health: 8
+Range: 4
+Tier A:
+  Cost: 32 CPU
+  Profit: 64 RAM
+Tier B:
+  Cost: 64 CPU
+  Profit: 128 RAM
+Tier C:
+  Cost: 128 CPU
+  Profit: 256 RAM
+RAM Mines just mine RAM.
+
+5. CPU Mine
+Observation Range: 3
+Health: 8
+Range: 5
+Tier A:
+  Cost: 32 RAM
+  Profit: 64 CPU/Min
+Tier B:
+  Cost: 64 RAM
+  Profit: 128 CPU/Min
+Tier C:
+  Cost: 128 RAM
+  Profit: 256 CPU/Min
+
+6. Observer
+Health: 8
+Range: 2
+Tier A:
+  Cost: 32 RAM, 32 CPU
+  Observation Range: 8
+Tier B:
+  Cost: 64 RAM, 64 CPU
+  Observation Range: 16
+Tier C:
+  Cost: 128 RAM, 128 CPU
+  Observation Range: 32
+
+7. Database
+Allows tier upgrading of all units.
+Health: 8
+Range: 3
+Observation Range: 6
+Tier A:
+  Cost: 64 RAM, 64 CPU
+Tier B:
+  Cost: 128 RAM, 128 CPU
+
+8. Repair Unit
+Repair units in proximity. Chooses one unit to repair at a time. Choice priority is: 1. Unit Tier; 2. Amount of damage.
+The choice is updated either when the reparation is complete, or after four seconds. (This is to avoid the repair rapidly glitching between two units)
+DPS is repair per second
+Range: 2
+Tier A:
+  Health: 16
+  Observation Range: 3
+  DPS: 1/4
+Tier B:
+  Health: 32
+  Observation Range: 4
+  DPS: 1/2
+Tier C:
+  Health: 64
+  Observation Range: 5
+  DPS: 1
+
+-----
+
+DEFENSIVE Units:
+Observation Range also acts as Firing range
+
+1. Omnidirectional Turret
+Covers all angles. Can be mounted on Towers. Shoots 4 rounds per second.
+Range: 1
+Tier A:
+  Cost: 16 RAM, 8 CPU
+  Health: 16
+  Observation Range: 3
+  DPS: 1
+Tier B:
+  Cost: 32 RAM, 16 CPU
+  Health: 32
+  Observation Range: 4
+  DPS: 2
+Tier C:
+  Cost: 64 RAM, 32 CPU
+  Health: 64
+  Observation Range: 5
+  DPS: 4
+
+2. Partial Directional Turret
+Covers 180 degrees, shoots 2 round per second. Observation Range only covers 180 degrees. Can be mounted on Towers.
+Range: 1
+Tier A:
+  Cost 8 RAM, 16 CPU
+  Health: 16
+  Observation Range: 4
+  DPS: 2
+Tier B:
+  Cost: 16 RAM, 32 CPU
+  Health: 32
+  Observation Range: 5
+  DPS: 4
+Tier C:
+  Cost: 32 RAM, 64 CPU
+  Health: 64
+  Observation Range: 6
+  DPS: 8
+
+3. Unidirectional Cannon
+Covers straight line. Shoots 1 round per second. Shoots over walls. Observation range only covers straight line.
+Range: 1
+Health: 8
+Tier A:
+  Cost: 16 RAM, 32 CPU
+  Observation Range: 5
+  DPS: 8
+Tier B:
+  Cost: 32 RAM, 64 CPU
+  Observation Range: 6
+  DPS: 16
+Tier C:
+  Cost: 64 RAM, 128 CPU
+  Observation Range: 7
+  DPS: 32
+
+-----
+
+ATTACK Units:
+(bots in 1.0)
+Speed is cell/second
+1. Squadron
+An attack unit consisting of four troops with automatic fire.
+DPS is the total of all troops.
+Firing Range: 2
+Tier A:
+  Health: 4
+  Speed: 0.5
+  DPS: 1
+Tier B:
+  Health: 8
+  Speed: 1
+  DPS: 2
+Tier C:
+  Health: 16
+  Speed: 1.5
+  DPS: 4
+
+2. Spinners
+Consists of two fast troops with melee damage.
+DPS is the total of all troops.
+Tier A:
+  Health: 4
+  Speed: 1
+  DPS: 2
+Tier B:
+  Health: 8
+  Speed: 2
+  DPS: 4
+Tier C:
+  Health: 16
+  Speed: 3
+  DPS: 8
+
+3. Sniper
+Consists of one troop which maintains its distance and fires one shot per second.
+Speed: 0.25
+Firing Range: 3
+Tier A:
+  Health: 2
+  DPS: 2
+Tier B:
+  Health: 4
+  DPS: 4
+Tier C:
+  Health: 8
+  DPS: 8
+
+4. Brute
+One large, slow troop using melee damage.
+Speed: 0.5
+Tier A:
+  Health: 16
+  DPS: 2
+Tier B:
+  Health: 32
+  DPS: 4
+Tier C:
+  Health: 64
+  DPS: 8
+
+--End--
