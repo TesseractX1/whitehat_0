@@ -4,6 +4,7 @@ namespace Whitehat.Player
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UI;
+    using Whitehat.Grid;
 
     public class PlayerScript : MonoBehaviour
     {
@@ -23,6 +24,9 @@ namespace Whitehat.Player
         public int MaxRAM { get { return maxRAM; } set { maxRAM = value; } }
 
         private float stopWatch = 1;
+
+        public Building onTower;
+        public GameObject wallPrefab;
 
         // Use this for initialization
         void Start()
@@ -48,6 +52,8 @@ namespace Whitehat.Player
             {
                 stopWatch -= Time.deltaTime;
             }
+
+
         }
     }
 }

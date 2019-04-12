@@ -18,7 +18,7 @@
         public int Maintenance { get { return maintenance; } protected set { } }
         public int productivity=0;
 
-        [SerializeField] protected float distance = 2.5f;
+        public static float distance = 2.5f;
 
         protected List<Hexagon> lightenedUp = new List<Hexagon>();
 

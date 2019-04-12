@@ -35,11 +35,12 @@
             }
         }
 
-        public void Build(GameObject buildingPrefab)
+        public Building Build(GameObject buildingPrefab)
         {
           //  if (building) { return; }
             building = GameObject.Instantiate(buildingPrefab, transform).GetComponent<Building>();
             building.hex = this;
+            return building.GetComponent<Building>();
         }
 
         public void Empty()
