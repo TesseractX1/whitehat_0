@@ -6,7 +6,7 @@ public class CameraScript : MonoBehaviour {
 	public float speed = 1f;
 	private Camera camera;
 	private Vector2 relativeMouse;
-	public float edgeScrollingSpeed = 20;
+	public float edgeScrollingSpeed = 15;
 	private Vector2 cameraScroll;
 
 	void Start () {
@@ -17,7 +17,7 @@ public class CameraScript : MonoBehaviour {
 	void Update () {
 		//RMB Scrolling
 		if(Input.GetMouseButton(2)){
-			transform.Translate(-Input.GetAxis("Mouse X")*2*Time.fixedDeltaTime*speed*camera.orthographicSize,-Input.GetAxis("Mouse Y")*2*Time.fixedDeltaTime*speed*camera.orthographicSize,0);
+			transform.Translate(-Input.GetAxis("Mouse X")*2*Time.fixedDeltaTime*speed*camera.orthographicSize*0.2f,-Input.GetAxis("Mouse Y")*2*Time.fixedDeltaTime*speed*camera.orthographicSize*0.2f,0);
 		}
 
 		//Edge Scrolling
@@ -32,8 +32,8 @@ public class CameraScript : MonoBehaviour {
 
 		//Arrow Key Scrolling
 		if(Input.GetAxis("Horizontal")!=0 || Input.GetAxis("Vertical")!=0){
-			cameraScroll.x=Input.GetAxis("Horizontal")*Time.fixedDeltaTime*40;
-			cameraScroll.y=Input.GetAxis("Vertical")*Time.fixedDeltaTime*40;
+			cameraScroll.x=Input.GetAxis("Horizontal")*Time.fixedDeltaTime*30;
+			cameraScroll.y=Input.GetAxis("Vertical")*Time.fixedDeltaTime*30;
 		}
 		cameraScroll = Vector2.ClampMagnitude(cameraScroll,1);
 		transform.Translate(cameraScroll*Time.fixedDeltaTime*edgeScrollingSpeed);
