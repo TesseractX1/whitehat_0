@@ -29,8 +29,13 @@ public class CameraScript : MonoBehaviour {
 		if(relativeMouse.x>0.95f) cameraScroll.x = (relativeMouse.x-0.95f)*20;
 		if(relativeMouse.y>0.9f) cameraScroll.y = (relativeMouse.y-0.9f)*10;
 		//relativeMouse=relativeMouse*20;
+
+		//Arrow Key Scrolling
+		if(Input.GetAxis("Horizontal")!=0 || Input.GetAxis("Vertical")!=0){
+			cameraScroll.x=Input.GetAxis("Horizontal")*Time.fixedDeltaTime*40;
+			cameraScroll.y=Input.GetAxis("Vertical")*Time.fixedDeltaTime*40;
+		}
 		cameraScroll = Vector2.ClampMagnitude(cameraScroll,1);
-		print(cameraScroll);
 		transform.Translate(cameraScroll*Time.fixedDeltaTime*edgeScrollingSpeed);
 
 		//transform.Translate(Vector3.left*Time.fixedDeltaTime*(0.05f-relativeMouse.x)*edgeScrollingSpeed);
