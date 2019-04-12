@@ -43,8 +43,11 @@
                     if (player.onTower)
                     {
                         Building secondTower = Build(mouseHex, player.towerPrefab, true);
-                        BuildWalls(player.onTower.transform, secondTower.transform);
-                        player.onTower = null;
+                        if (secondTower)
+                        {
+                            BuildWalls(player.onTower.transform, secondTower.transform);
+                            player.onTower = null;
+                        }
                     }
                     else
                     {
@@ -120,6 +123,8 @@
 
             Vector3 size = new Vector3(player.wallPrefab.GetComponent<BoxCollider2D>().size.x, player.wallPrefab.GetComponent<BoxCollider2D>().size.y, 0);
 
+
+            if (player.CPU < player.wallPrefab.GetComponent<Building>().Cost * (towerLines.positionCount - 2)) { return; }
             for (int i=1;i< towerLines.positionCount-1; i++)
             {
                 RaycastHit[] hits = Physics.SphereCastAll(towerLines.GetPosition(i), 0.1f, Vector3.one);

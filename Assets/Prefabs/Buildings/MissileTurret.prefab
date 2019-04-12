@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1379777831378456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.1}
   m_LocalScale: {x: 0.9, y: 0.90000045, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,7 +79,6 @@ MonoBehaviour:
   cost: 30
   maintenance: 20
   productivity: 0
-  distance: 2.5
   target: {fileID: 0}
   unitHit: {fileID: 0}
   attackRange: 50
