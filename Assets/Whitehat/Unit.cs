@@ -36,19 +36,6 @@
             {
                 targetPointer += 180;
             }
-            /*if (positionX > 0)
-            {
-                targetPointer = 270 + targetPointer;
-            }
-            else if (positionX < 0 && positionY < 0)
-            {
-                targetPointer = 180 + targetPointer;
-            }
-            else if (positionX < 0 && positionY > 0)
-            {
-                targetPointer = 360 + targetPointer;
-            }*/
-
             float torque = 0;
             Mathf.SmoothDampAngle(self.eulerAngles.z+adjustment, targetPointer, ref torque, speedFactor);
             return torque;

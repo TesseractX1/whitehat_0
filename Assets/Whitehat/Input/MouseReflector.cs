@@ -18,6 +18,7 @@
         public void AssignBuildingPrefab(GameObject newPrefab) { mouseBuildingPrefab = newPrefab; }
 
         private RaycastHit hit;
+        [SerializeField] private LineRenderer towerLines;
 
         /* Use this for initialization
         void Start()
@@ -31,12 +32,17 @@
             if (Physics.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), mainCamera.transform.forward, out hit) && hit.collider.GetComponent<Hexagon>() && hit.collider.GetComponent<Hexagon>().Visible)
             {
                 mouseHex = hit.collider.GetComponent<Hexagon>();
+                if (player.onTower)
+                {
+                    LocateWalls(player.onTower.transform, mouseHex.transform);
+
+                }
 
                 if (Input.GetMouseButtonDown(0) && mouseBuildingPrefab && !mouseHex.building)
                 {
                     if (player.onTower)
                     {
-                        Building secondTower=Build(mouseHex, player.onTower.gameObject);
+                        Building secondTower = Build(mouseHex, player.towerPrefab, true);
                         BuildWalls(player.onTower.transform, secondTower.transform);
                         player.onTower = null;
                     }
@@ -61,6 +67,8 @@
             }
 
             mouseBuildingSprite.sprite = mouseBuildingPrefab ? mouseBuildingPrefab.GetComponent<SpriteRenderer>().sprite : null;
+
+            towerLines.enabled = player.onTower;
         }
 
         public Building Build(Hexagon hex, GameObject buildingPrefab, bool ignoresTower=false)
@@ -73,34 +81,57 @@
                 hex.Build(buildingPrefab);
                 hex.building.player = player;
 
-                if (!ignoresTower && building.kind == "tower") { player.onTower = building; }
+                if (!ignoresTower && building.kind == "tower") { player.onTower = hex.building; }
                 return hex.building;
             }
             else { return null; }
         }
 
-        public void BuildWalls(Transform tower1, Transform tower2)
+        public void LocateWalls(Transform tower1, Transform tower2)
         {
+            towerLines.SetPosition(0, player.onTower.transform.position);
+            towerLines.SetPosition(1, mouseHex.transform.position);
             float towerDistance = Vector3.Distance(tower2.position, tower1.position);
             Vector3 direction = (tower2.position - tower1.position).normalized;
 
-            Vector3 boxCentre;
-            RaycastHit[] hits;
-
-            for (float distance=0; distance <= towerDistance; distance += Building.distance*2)
+            int i = 0;
+            for (float distance = 0; distance <= towerDistance; distance += Building.distance)
             {
-                boxCentre = tower1.position + direction*distance;
-                hits = Physics.BoxCastAll(boxCentre, new Vector3(Building.distance/4, Building.distance/2,1),Vector3.one);
-                print(direction);
-                if (hits.Length <1) { continue; }
-                Building built=Build(hits[0].collider.GetComponent<Hexagon>(),player.wallPrefab);
-                built.transform.position = boxCentre;
+                towerLines.positionCount = i+1 > towerLines.positionCount ? i+1 : towerLines.positionCount;
+                towerLines.SetPosition(i, tower1.position + direction * distance);
+                i++;
+            }
+            towerLines.positionCount = i + 1;
+            towerLines.SetPosition(i, tower2.transform.position);
+        }
+
+        public void BuildWalls(Transform tower1, Transform tower2)
+        {
+            float angle = 0;
+            float positionX = (tower2.position.x - tower1.position.x);
+            float positionY = (tower2.position.y - tower1.position.y);
+            angle = Mathf.Atan(positionX / positionY) * Mathf.Rad2Deg;
+
+            angle = -angle;
+            if (positionY < 0)
+            {
+                angle += 180;
+            }
+
+            Vector3 size = new Vector3(player.wallPrefab.GetComponent<BoxCollider2D>().size.x, player.wallPrefab.GetComponent<BoxCollider2D>().size.y, 0);
+
+            for (int i=1;i< towerLines.positionCount-1; i++)
+            {
+                RaycastHit[] hits = Physics.SphereCastAll(towerLines.GetPosition(i), 0.1f, Vector3.one);
+                if (hits.Length <= 0) { continue; }
+                Building wallBuilt=Build(hits[0].collider.GetComponent<Hexagon>(), player.wallPrefab);
                 foreach(RaycastHit hit in hits)
                 {
-                    hit.collider.GetComponent<Hexagon>().building = built;
+                    hit.collider.GetComponent<Hexagon>().building = wallBuilt;
                 }
+                wallBuilt.transform.position = towerLines.GetPosition(i);
+                wallBuilt.transform.eulerAngles = Vector3.forward * angle;
             }
-           
         }
     }
 }

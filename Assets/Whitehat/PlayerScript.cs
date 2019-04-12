@@ -26,6 +26,7 @@ namespace Whitehat.Player
         private float stopWatch = 1;
 
         public Building onTower;
+        public GameObject towerPrefab;
         public GameObject wallPrefab;
 
         // Use this for initialization

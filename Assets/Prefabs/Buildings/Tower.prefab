@@ -71,7 +71,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 1068609171221924, guid: 5ede3a2ab896a4406a76b5b8cb7b78e4,
     type: 2}
   faction: 0
-  health: 10
+  health: 50
   hex: {fileID: 0}
   player: {fileID: 0}
   kind: tower

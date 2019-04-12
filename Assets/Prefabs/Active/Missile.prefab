@@ -185,7 +185,7 @@ MonoBehaviour:
   faction: 0
   health: 10
   target: {fileID: 0}
-  speedFactor: 8
+  speedFactor: 20
   rotateFactor: 40
   damage: 10
   range: 10
