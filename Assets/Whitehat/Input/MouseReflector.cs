@@ -127,7 +127,10 @@
                 Building wallBuilt=Build(hits[0].collider.GetComponent<Hexagon>(), player.wallPrefab);
                 foreach(RaycastHit hit in hits)
                 {
-                    hit.collider.GetComponent<Hexagon>().building = wallBuilt;
+                    if (!hit.collider.GetComponent<Hexagon>().building)
+                    {
+                        hit.collider.GetComponent<Hexagon>().building = wallBuilt;
+                    }
                 }
                 wallBuilt.transform.position = towerLines.GetPosition(i);
                 wallBuilt.transform.eulerAngles = Vector3.forward * angle;
