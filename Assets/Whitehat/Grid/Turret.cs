@@ -4,14 +4,16 @@
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using Whitehat.Active;
 
-    public class Turret : Building
+    [RequireComponent(typeof(Unit))]
+
+    public class Turret : MonoBehaviour
     {
         public Unit target;
         public Unit unitHit;
         private float torque;
 
-        public float attackRange;
         public float sensorRange;
         public float damage;
 
@@ -24,15 +26,16 @@
         // Update is called once per frame
         protected void Update()
         {
-            base.Update();
-
-            if (!target)
+            if (GetComponent<ActiveUnit>()) {
+                target = GetComponent<ActiveUnit>().target;
+            }
+            else if (!target)
             {
-                target=UpdateTarget(sensorRange);
+                target = GetComponent<Unit>().UpdateTarget(sensorRange);
             }
             else
             {
-                torque = CalculateTorque(transform, target.transform, 0.2f);
+                torque = Unit.CalculateTorque(transform, target.transform, 0.2f);
                 transform.Rotate(Vector3.forward * torque * Time.deltaTime);
             }
         }

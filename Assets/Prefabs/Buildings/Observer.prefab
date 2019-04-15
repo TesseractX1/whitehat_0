@@ -75,7 +75,7 @@ MonoBehaviour:
   hex: {fileID: 0}
   player: {fileID: 0}
   kind: observer
-  initialRange: 0
+  initialRange: 8
   cost: 30
   maintenance: 10
   productivity: 0

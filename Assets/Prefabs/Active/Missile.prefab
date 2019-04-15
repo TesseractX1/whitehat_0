@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 96923218456686522}
   - component: {fileID: 114287866124974994}
   - component: {fileID: 61598700732833730}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,9 +187,8 @@ MonoBehaviour:
   target: {fileID: 0}
   speedFactor: 20
   rotateFactor: 40
-  damage: 10
+  damage: 5
   range: 10
-  maxDamage: 40
 --- !u!212 &212984963679171050
 SpriteRenderer:
   m_ObjectHideFlags: 1

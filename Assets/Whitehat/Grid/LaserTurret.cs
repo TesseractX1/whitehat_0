@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using UnityEngine;
 
+    [RequireComponent(typeof(Unit))]
+
     public class LaserTurret : Turret
     {
         [SerializeField] private LineRenderer beamLine;
@@ -16,16 +18,16 @@
             base.Update();
 
             upDirection = new Vector2(transform.up.x, transform.up.y);
-            beamHit = Physics2D.Raycast(transform.position, upDirection, attackRange, 1025);
+            beamHit = Physics2D.Raycast(transform.position, upDirection, sensorRange, Unit.faction2Layer);
             beamLine.SetPosition(1, Vector3.up * beamHit.distance);
 
-            unitHit = CanAttack(beamHit) ? beamHit.collider.GetComponent<Unit>() : null;
+            unitHit = GetComponent<Unit>().CanAttack(beamHit) ? beamHit.collider.GetComponent<Unit>() : null;
             if (unitHit)
             {
                 unitHit.Damage(damage);
                 if (Random.value < 0.1f)
                 {
-                    GenerateParticles(beamHit.point);
+                    GetComponent<Unit>().GenerateParticles(beamHit.point);
                 }
             }
         }

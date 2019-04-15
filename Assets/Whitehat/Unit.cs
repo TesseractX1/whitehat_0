@@ -7,6 +7,8 @@
     public class Unit : MonoBehaviour
     {
         [SerializeField] protected GameObject particlePrefab;
+        public static int faction1Layer = 513;
+        public static int faction2Layer = 1025;
 
         public UnitFaction faction;
         public float health;
@@ -41,26 +43,26 @@
             return torque;
         }
 
-        protected bool CanAttack(RaycastHit2D hit)
+        public bool CanAttack(RaycastHit2D hit)
         {
             return hit.collider&&CanAttack(hit.collider);
         }
 
-        protected bool CanAttack(Collider2D hit)
+        public bool CanAttack(Collider2D hit)
         {
             return hit.GetComponent<Unit>() && hit.GetComponent<Unit>().faction != faction;
         }
 
-        protected void GenerateParticles(Vector3 position)
+        public void GenerateParticles(Vector3 position)
         {
             GameObject.Instantiate(particlePrefab, position, transform.rotation);
         }
 
-        protected Unit UpdateTarget(float range, int skipTarget = 0, float randomFactor = 0)
+        public Unit UpdateTarget(float range, int skipTarget = 0, float randomFactor = 0)
         {
             int turn = skipTarget;
             Unit target=null;
-            foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, 1025))
+            foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, faction2Layer))
             {
                 if (CanAttack(hit))
                 {
@@ -79,7 +81,7 @@
             return target;
         }
 
-        protected Unit UpdateTargetOnGrid(float range, int skipTarget = 0, float randomFactor = 0)
+        public Unit UpdateTargetOnGrid(float range, int skipTarget = 0, float randomFactor = 0)
         {
             int turn = skipTarget;
             Unit target = null;

@@ -102,7 +102,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 1624232523723262, guid: 8896ea1b5f41e4044b434378893a8240,
     type: 2}
   faction: 1
-  health: 10
+  health: 20
   target: {fileID: 0}
   speedFactor: 1
   rotateFactor: 10

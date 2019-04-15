@@ -7,7 +7,6 @@
     public class Missile : ActiveUnit
     {
         [SerializeField] protected float range;
-        [SerializeField] protected float maxDamage;
 
         private void Update()
         {
@@ -21,19 +20,35 @@
         protected void OnCollisionStay2D(Collision2D collision)
         {
             if (CanAttack(collision.collider))
-            { Hit(); }
+            {
+                collision.collider.GetComponent<Unit>().Damage(damage/Time.deltaTime);
+                Hit();
+            }
         }
 
         private void Hit()
         {
-            foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, 1025))
+            int layerMask = 0;
+            if (faction == UnitFaction.faction1)
+            {
+                layerMask = Unit.faction2Layer;
+            }
+            else
+            {
+                layerMask = Unit.faction1Layer;
+            }
+
+            foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, layerMask))
             {
                 if (CanAttack(hit))
                 {
-                    hit.collider.GetComponent<Unit>().Damage(maxDamage * (1-Vector3.Distance(transform.position,hit.collider.transform.position)*0.8f / range));
+                    hit.collider.GetComponent<Unit>().Damage(damage * (1-Vector3.Distance(transform.position,hit.collider.transform.position)*0.8f / (range)));
                 }
             }
-            GenerateParticles(transform.position);
+            if (Random.value <= 0.3f)
+            {
+                GenerateParticles(transform.position);
+            }
             GameObject.Destroy(gameObject);
         }
     }

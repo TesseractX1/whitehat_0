@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212411048139590098}
   - component: {fileID: 58370236794832636}
   - component: {fileID: 114623416269593580}
+  - component: {fileID: 114556138353983054}
   m_Layer: 9
   m_Name: MissileTurret
   m_TagString: Untagged
@@ -57,6 +58,27 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.6900003
+--- !u!114 &114556138353983054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1379777831378456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b22cb371912f4e49bf0aa43399d1be7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlePrefab: {fileID: 0}
+  faction: 0
+  health: 15
+  hex: {fileID: 0}
+  player: {fileID: 0}
+  kind: MissileTurret
+  initialRange: 1
+  cost: 20
+  maintenance: 10
+  productivity: 0
 --- !u!114 &114623416269593580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -68,21 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36fd25880a0264adda6274ed159a40f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlePrefab: {fileID: 1068609171221924, guid: 5ede3a2ab896a4406a76b5b8cb7b78e4,
-    type: 2}
-  faction: 0
-  health: 20
-  hex: {fileID: 0}
-  player: {fileID: 0}
-  kind: MissileTurret
-  initialRange: 2
-  cost: 30
-  maintenance: 20
-  productivity: 0
   target: {fileID: 0}
   unitHit: {fileID: 0}
-  attackRange: 50
-  sensorRange: 50
+  sensorRange: 30
   damage: 0
   missilePrefab: {fileID: 1337606159687370, guid: 09431f47922a540b7b8e9dbf65fcdd8b,
     type: 2}

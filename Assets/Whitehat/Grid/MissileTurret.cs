@@ -5,6 +5,8 @@
     using UnityEngine;
     using Whitehat.Active;
 
+    [RequireComponent(typeof(Unit))]
+
     public class MissileTurret : Turret
     {
         [SerializeField] private GameObject missilePrefab;
@@ -28,7 +30,7 @@
                         LaunchMissile(target, j);
                     }
                 }
-                stopWatch = frequency;
+                stopWatch = frequency+Random.value*frequency*0.1f;
             }
             else { stopWatch -= Time.deltaTime; }
         }
@@ -37,7 +39,7 @@
         {
             Missile newMissile=GameObject.Instantiate(missilePrefab, transform.TransformPoint(launchPoints[launchPointOrder]), transform.rotation).GetComponent<Missile>();
             newMissile.target = target;
-            target = UpdateTarget(sensorRange, missilePerLaunch * 3, 0.7f);
+            target = GetComponent<Unit>().UpdateTarget(sensorRange, missilePerLaunch * 3, 0.7f);
         }
     }
 }
