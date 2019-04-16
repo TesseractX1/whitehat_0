@@ -83,6 +83,8 @@
                 player.CPU -= building.Cost;
                 hex.Build(buildingPrefab);
                 hex.building.player = player;
+                if (hex.building.GetComponent<MarkReceptor>()) { 
+                hex.building.GetComponent<MarkReceptor>().toggleList = player.GetComponent<MarkToggleList>(); }
 
                 if (!ignoresTower && building.kind == "tower") { player.onTower = hex.building; }
                 return hex.building;

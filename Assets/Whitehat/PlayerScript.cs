@@ -5,6 +5,9 @@ namespace Whitehat.Player
     using UnityEngine;
     using UnityEngine.UI;
     using Whitehat.Grid;
+    using Whitehat.Input;
+
+    [RequireComponent(typeof(MarkToggleList))]
 
     public class PlayerScript : MonoBehaviour
     {
@@ -28,6 +31,13 @@ namespace Whitehat.Player
         public Building onTower;
         public GameObject towerPrefab;
         public GameObject wallPrefab;
+
+        private bool markCPU;
+        private bool markRAM;
+        public void TurnOnMarkCPU() { markCPU = true; }
+        public void TurnOffMarkCPU() { markCPU = false; }
+        public void TurnOnMarkRAM() { markRAM = true; }
+        public void TurnOffMarkRAM() { markRAM = false; }
 
         // Use this for initialization
         void Start()
@@ -54,7 +64,8 @@ namespace Whitehat.Player
                 stopWatch -= Time.deltaTime;
             }
 
-
+            GetComponent<MarkToggleList>().toggles[0] = markCPU;
+            GetComponent<MarkToggleList>().toggles[1] = markRAM;
         }
     }
 }

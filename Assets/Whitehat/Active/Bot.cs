@@ -6,7 +6,7 @@
     using Whitehat.Grid;
 
     public class Bot : ActiveUnit {
-        [SerializeField] protected Building enemyCore;
+        public Building enemyCore;
         [SerializeField] protected Vector3 hitPoint;
 
         public float sensorRange=30;
@@ -15,14 +15,14 @@
         protected void Update() {
             base.Update();
 
-            /*if (!target||target==enemyCore)
+            if (!target||target==enemyCore)
             {
                 target=UpdateTargetOnGrid(sensorRange);
                 if (!target)
                 {
                     target = enemyCore;
                 }
-            }*/
+            }
         }
 
         protected virtual void OnCollisionStay2D(Collision2D collision)
