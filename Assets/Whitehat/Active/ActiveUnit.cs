@@ -17,6 +17,11 @@
         protected float currentVelocity;
         protected float torque;
 
+        protected void Start()
+        {
+            GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().unitCount++;
+        }
+
         // Update is called once per frame
         protected void Update()
         {
@@ -27,11 +32,21 @@
                 return;
             }
 
-            Mathf.SmoothDamp(0, Vector3.Distance(transform.position, target.transform.position), ref currentVelocity, 1 / speedFactor*10);
             torque = CalculateTorque(transform, target.transform, 1 / rotateFactor);
-
-            transform.Translate(Vector3.up * (currentVelocity+Random.value*0.1f*currentVelocity) * Time.deltaTime);
             transform.Rotate(Vector3.forward * torque * Time.deltaTime);
+
+            Move();
+        }
+
+        protected virtual void Move()
+        {
+            Mathf.SmoothDamp(0, Vector3.Distance(transform.position, target.transform.position), ref currentVelocity, 1 / speedFactor * 10);
+            transform.Translate(Vector3.up * (currentVelocity + Random.value * 0.1f * currentVelocity) * Time.deltaTime);
+        }
+
+        protected void OnDestroy()
+        {
+            GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().unitCount--;
         }
     }
 }

@@ -7,6 +7,8 @@
 
     public class UnitGenerator : MonoBehaviour
     {
+        [SerializeField] private ActiveUnitManager manager;
+
         [SerializeField] private Transform platform;
         [SerializeField] private GameObject prefab;
         [SerializeField] private float interval;
@@ -19,6 +21,8 @@
         // Use this for initialization
         void Start()
         {
+            manager = GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>();
+            manager.generators.Add(this);
             stopWatch = interval;
         }
 
@@ -37,7 +41,7 @@
                 }
                 stopWatch = interval;
             }
-            else
+            else if(manager.generatorsActive)
             {
                 stopWatch -= Time.deltaTime;
             }

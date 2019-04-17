@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 96923218456686522}
   - component: {fileID: 114287866124974994}
   - component: {fileID: 61598700732833730}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 3
+  m_Time: 0.5
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 0.3
@@ -182,13 +182,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particlePrefab: {fileID: 1208114050315006, guid: 8b5080f54f6a242acb64a0dfe13b37f5,
     type: 2}
+  canBeTarget: 0
   faction: 0
   health: 10
   target: {fileID: 0}
   speedFactor: 20
   rotateFactor: 40
-  damage: 5
+  damage: 10
   range: 10
+  hitGridLayer: 0
 --- !u!212 &212984963679171050
 SpriteRenderer:
   m_ObjectHideFlags: 1

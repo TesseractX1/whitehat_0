@@ -70,6 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particlePrefab: {fileID: 1068609171221924, guid: 5ede3a2ab896a4406a76b5b8cb7b78e4,
     type: 2}
+  canBeTarget: 0
   faction: 0
   health: 50
   hex: {fileID: 0}

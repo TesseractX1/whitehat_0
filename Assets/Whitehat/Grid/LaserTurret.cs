@@ -18,7 +18,7 @@
             base.Update();
 
             upDirection = new Vector2(transform.up.x, transform.up.y);
-            beamHit = Physics2D.Raycast(transform.position, upDirection, sensorRange, Unit.faction2Layer);
+            beamHit = Physics2D.Raycast(transform.position, upDirection, sensorRange, Unit.unitLayer);
             beamLine.SetPosition(1, Vector3.up * beamHit.distance);
 
             unitHit = GetComponent<Unit>().CanAttack(beamHit) ? beamHit.collider.GetComponent<Unit>() : null;

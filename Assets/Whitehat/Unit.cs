@@ -7,8 +7,10 @@
     public class Unit : MonoBehaviour
     {
         [SerializeField] protected GameObject particlePrefab;
-        public static int faction1Layer = 513;
-        public static int faction2Layer = 1025;
+        public static int gridLayer = 513;
+        public static int unitLayer = 1025;
+
+        public bool canBeTarget=true;
 
         public UnitFaction faction;
         public float health;
@@ -62,9 +64,9 @@
         {
             int turn = skipTarget;
             Unit target=null;
-            foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, faction2Layer))
+            foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, unitLayer))
             {
-                if (CanAttack(hit))
+                if (CanAttack(hit) && hit.collider.GetComponent<Unit>().canBeTarget)
                 {
                     target = hit.collider.GetComponent<Unit>();
                     if (turn > 0 && randomFactor > Random.value)
@@ -85,9 +87,9 @@
         {
             int turn = skipTarget;
             Unit target = null;
-            foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, 513))
+            foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, gridLayer))
             {
-                if (CanAttack(hit))
+                if (CanAttack(hit) && hit.collider.GetComponent<Unit>().canBeTarget)
                 {
                     target = hit.collider.GetComponent<Unit>();
                     if (turn > 0 && randomFactor > Random.value)

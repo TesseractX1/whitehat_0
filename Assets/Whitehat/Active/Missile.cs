@@ -7,6 +7,7 @@
     public class Missile : ActiveUnit
     {
         [SerializeField] protected float range;
+        [SerializeField] private bool hitGridLayer;
 
         private void Update()
         {
@@ -28,15 +29,7 @@
 
         private void Hit()
         {
-            int layerMask = 0;
-            if (faction == UnitFaction.faction1)
-            {
-                layerMask = Unit.faction2Layer;
-            }
-            else
-            {
-                layerMask = Unit.faction1Layer;
-            }
+            int layerMask = hitGridLayer ? Unit.gridLayer : Unit.unitLayer;
 
             foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, layerMask))
             {
@@ -50,6 +43,11 @@
                 GenerateParticles(transform.position);
             }
             GameObject.Destroy(gameObject);
+        }
+
+        protected override void Move()
+        {
+            transform.Translate(Vector3.up * (speedFactor + Random.value * 0.1f * speedFactor) * Time.deltaTime);
         }
     }
 }
