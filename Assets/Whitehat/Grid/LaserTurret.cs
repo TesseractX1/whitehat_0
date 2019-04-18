@@ -3,6 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using Whitehat.UnitMech;
 
     [RequireComponent(typeof(Unit))]
 
@@ -18,10 +19,10 @@
             base.Update();
 
             upDirection = new Vector2(transform.up.x, transform.up.y);
-            beamHit = Physics2D.Raycast(transform.position, upDirection, sensorRange, Unit.unitLayer);
+            beamHit = Physics2D.Raycast(transform.position, upDirection, sensorRange, UnitTargetSensor.unitLayer);
             beamLine.SetPosition(1, Vector3.up * beamHit.distance);
 
-            unitHit = GetComponent<Unit>().CanAttack(beamHit) ? beamHit.collider.GetComponent<Unit>() : null;
+            unitHit = GetComponent<UnitTargetSensor>().CanAttack(beamHit) ? beamHit.collider.GetComponent<Unit>() : null;
             if (unitHit)
             {
                 unitHit.Damage(damage);

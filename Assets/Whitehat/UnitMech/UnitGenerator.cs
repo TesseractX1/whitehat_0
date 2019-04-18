@@ -1,4 +1,4 @@
-﻿namespace Whitehat.Active
+﻿namespace Whitehat.UnitMech
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -44,6 +44,18 @@
             else if(manager.generatorsActive)
             {
                 stopWatch -= Time.deltaTime;
+            }
+        }
+
+        public void GenerateOnce(int count)
+        {
+            for(int i = 0; i < count; i++)
+                {
+                Unit generated = GameObject.Instantiate(prefab, transform.position, transform.rotation, platform).GetComponent<Unit>();
+                if (generated.GetComponent<Bot>())
+                {
+                    generated.GetComponent<Bot>().enemyCore = enemyCore;
+                }
             }
         }
     }

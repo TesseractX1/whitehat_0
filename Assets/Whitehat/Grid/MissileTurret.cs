@@ -3,7 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using Whitehat.Active;
+    using Whitehat.UnitMech;
 
     [RequireComponent(typeof(Unit))]
 
@@ -39,7 +39,7 @@
         {
             Missile newMissile=GameObject.Instantiate(missilePrefab, transform.TransformPoint(launchPoints[launchPointOrder]), transform.rotation).GetComponent<Missile>();
             newMissile.target = target;
-            target = GetComponent<Unit>().UpdateTarget(sensorRange, missilePerLaunch * 3, 0.7f);
+            target = GetComponent<UnitTargetSensor>().UpdateTarget(sensorRange, missilePerLaunch * 3, 0.7f);
         }
     }
 }

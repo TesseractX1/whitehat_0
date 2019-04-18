@@ -4,9 +4,10 @@
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using Whitehat.Active;
+    using Whitehat.UnitMech;
 
     [RequireComponent(typeof(Unit))]
+    [RequireComponent(typeof(UnitTargetSensor))]
 
     public class Turret : MonoBehaviour
     {
@@ -31,7 +32,7 @@
             }
             else if (!target)
             {
-                target = GetComponent<Unit>().UpdateTarget(sensorRange);
+                target = GetComponent<UnitTargetSensor>().UpdateTarget(sensorRange);
             }
             else
             {

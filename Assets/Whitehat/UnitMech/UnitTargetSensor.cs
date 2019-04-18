@@ -1,72 +1,60 @@
-﻿namespace Whitehat
+﻿namespace Whitehat.UnitMech
 {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class Unit : MonoBehaviour
+    [RequireComponent(typeof(Unit))]
+
+    public class UnitTargetSensor : MonoBehaviour
     {
-        [SerializeField] protected GameObject particlePrefab;
         public static int gridLayer = 513;
         public static int unitLayer = 1025;
 
-        public bool canBeTarget=true;
+        public bool targetSameFaction = false;
+        public bool targetIneffective;
+        public bool ignoresCanBeTarget = false;
 
-        public UnitFaction faction;
-        public float health;
+        private Unit unit;
 
-        protected void Update()
+        private void Start()
         {
-            if (health <= 0)
-            {
-                GameObject.Destroy(gameObject);
-            }
-        }
-       
-        public void Damage(float damage)
-        {
-            health -= damage * Time.deltaTime;
+            unit = GetComponent<Unit>();
         }
 
-        public static float CalculateTorque(Transform self, Transform target, float speedFactor, float adjustment=0)
+        private void Update()
         {
-            float targetPointer = 0;
-            float positionX = (target.position.x - self.position.x);
-            float positionY = (target.position.y - self.position.y);
-            targetPointer = Mathf.Atan(positionX / positionY) * Mathf.Rad2Deg;
-
-            targetPointer = -targetPointer;
-            if (positionY < 0)
+            if (GetComponent<Bot>()&& GetComponent<Bot>().target)
             {
-                targetPointer += 180;
+                if (unit.kind != "fixBot")
+                {
+                    targetIneffective = GetComponent<Bot>().target == GetComponent<Bot>().enemyCore;
+                }
+                else
+                {
+                    targetIneffective = GetComponent<Bot>().target.health >= GetComponent<Bot>().target.maxHealth;
+                }
             }
-            float torque = 0;
-            Mathf.SmoothDampAngle(self.eulerAngles.z+adjustment, targetPointer, ref torque, speedFactor);
-            return torque;
         }
 
         public bool CanAttack(RaycastHit2D hit)
         {
-            return hit.collider&&CanAttack(hit.collider);
+            return hit.collider && CanAttack(hit.collider);
         }
 
         public bool CanAttack(Collider2D hit)
         {
-            return hit.GetComponent<Unit>() && hit.GetComponent<Unit>().faction != faction;
-        }
-
-        public void GenerateParticles(Vector3 position)
-        {
-            GameObject.Instantiate(particlePrefab, position, transform.rotation);
+            bool factionMatch = targetSameFaction ? (hit.GetComponent<Unit>().faction == GetComponent<Unit>().faction) : (hit.GetComponent<Unit>().faction != GetComponent<Unit>().faction);
+            return hit.GetComponent<Unit>() && factionMatch;
         }
 
         public Unit UpdateTarget(float range, int skipTarget = 0, float randomFactor = 0)
         {
             int turn = skipTarget;
-            Unit target=null;
+            Unit target = null;
             foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, unitLayer))
             {
-                if (CanAttack(hit) && hit.collider.GetComponent<Unit>().canBeTarget)
+                if (CanAttack(hit) && (hit.collider.GetComponent<Unit>().canBeTarget&&!ignoresCanBeTarget))
                 {
                     target = hit.collider.GetComponent<Unit>();
                     if (turn > 0 && randomFactor > Random.value)
@@ -89,7 +77,8 @@
             Unit target = null;
             foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, gridLayer))
             {
-                if (CanAttack(hit) && hit.collider.GetComponent<Unit>().canBeTarget)
+                bool canAttack = ignoresCanBeTarget? CanAttack(hit):(CanAttack(hit) && hit.collider.GetComponent<Unit>().canBeTarget);
+                if (canAttack)
                 {
                     target = hit.collider.GetComponent<Unit>();
                     if (turn > 0 && randomFactor > Random.value)
@@ -105,10 +94,5 @@
             }
             return target;
         }
-    }
-
-    public enum UnitFaction
-    {
-        faction1, faction2
     }
 }

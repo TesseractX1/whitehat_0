@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using UnityEngine;
     using Whitehat.Player;
+    using Whitehat.UnitMech;
 
     public class Building : Unit
     {
         public Hexagon hex;
         public PlayerScript player;
-        public string kind;
 
         [SerializeField] protected int initialRange;
         [SerializeField] protected int cost;

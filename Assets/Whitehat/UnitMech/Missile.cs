@@ -1,4 +1,4 @@
-﻿namespace Whitehat.Active
+﻿namespace Whitehat.UnitMech
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -20,7 +20,7 @@
 
         protected void OnCollisionStay2D(Collision2D collision)
         {
-            if (CanAttack(collision.collider))
+            if (GetComponent<UnitTargetSensor>().CanAttack(collision.collider))
             {
                 collision.collider.GetComponent<Unit>().Damage(damage/Time.deltaTime);
                 Hit();
@@ -29,11 +29,11 @@
 
         private void Hit()
         {
-            int layerMask = hitGridLayer ? Unit.gridLayer : Unit.unitLayer;
+            int layerMask = hitGridLayer ? UnitTargetSensor.gridLayer : UnitTargetSensor.unitLayer;
 
             foreach (RaycastHit2D hit in Physics2D.CircleCastAll(transform.position, range, Vector2.one, Mathf.Infinity, layerMask))
             {
-                if (CanAttack(hit))
+                if (GetComponent<UnitTargetSensor>().CanAttack(hit))
                 {
                     hit.collider.GetComponent<Unit>().Damage(damage * (1-Vector3.Distance(transform.position,hit.collider.transform.position)*0.8f / (range)));
                 }
