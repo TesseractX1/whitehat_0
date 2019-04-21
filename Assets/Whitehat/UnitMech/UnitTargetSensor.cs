@@ -44,7 +44,11 @@
 
         public bool CanAttack(Collider2D hit)
         {
-            bool factionMatch = targetSameFaction ? (hit.GetComponent<Unit>().faction == GetComponent<Unit>().faction) : (hit.GetComponent<Unit>().faction != GetComponent<Unit>().faction);
+            bool factionMatch = hit.GetComponent<Unit>().faction != GetComponent<Unit>().faction;
+            if (targetSameFaction)
+            {
+                factionMatch = !factionMatch;
+            }
             return hit.GetComponent<Unit>() && factionMatch;
         }
 
