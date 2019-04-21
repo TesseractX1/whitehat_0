@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61970338508831330}
   - component: {fileID: 114995528054876724}
   - component: {fileID: 50594030574404122}
+  - component: {fileID: 114621760119272544}
   m_Layer: 10
   m_Name: SuperBot
   m_TagString: Untagged
@@ -88,6 +89,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &114621760119272544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1785953162778762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65e2cbf8c86ad460091e6fa16c1aefc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSameFaction: 0
+  targetIneffective: 0
+  ignoresCanBeTarget: 0
 --- !u!114 &114995528054876724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,14 +116,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particlePrefab: {fileID: 1624232523723262, guid: 8896ea1b5f41e4044b434378893a8240,
     type: 2}
+  kind: superBot
+  canBeTarget: 1
   faction: 1
   health: 40
+  maxHealth: 40
   target: {fileID: 0}
   speedFactor: 0.5
   rotateFactor: 10
   damage: 1
+  waveManager: {fileID: 0}
   enemyCore: {fileID: 0}
   hitPoint: {x: 0, y: 0.4, z: 0}
+  destroyOnInterval: 1
   sensorRange: 30
 --- !u!212 &212205746387068594
 SpriteRenderer:

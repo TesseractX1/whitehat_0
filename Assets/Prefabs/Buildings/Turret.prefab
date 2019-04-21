@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 58276911424346662}
   - component: {fileID: 114946000952224510}
   - component: {fileID: 114623116844773246}
+  - component: {fileID: 114209328842612628}
   m_Layer: 9
   m_Name: Turret
   m_TagString: Untagged
@@ -88,6 +89,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.6900003
+--- !u!114 &114209328842612628
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1117538587359162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65e2cbf8c86ad460091e6fa16c1aefc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSameFaction: 0
+  targetIneffective: 0
+  ignoresCanBeTarget: 0
 --- !u!114 &114623116844773246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,12 +116,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particlePrefab: {fileID: 1068609171221924, guid: 5ede3a2ab896a4406a76b5b8cb7b78e4,
     type: 2}
+  kind: laserTurret
   canBeTarget: 1
   faction: 0
   health: 10
+  maxHealth: 10
   hex: {fileID: 0}
   player: {fileID: 0}
-  kind: LaserTurret
   initialRange: 1
   cost: 20
   maintenance: 10

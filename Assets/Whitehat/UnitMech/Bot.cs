@@ -19,6 +19,7 @@
 
         private void Start()
         {
+            base.Start();
             waveManager = GameObject.FindGameObjectWithTag("ActiveUnitManager").GetComponent<AttackWaveManager>();
         }
 

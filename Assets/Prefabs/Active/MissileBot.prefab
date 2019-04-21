@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114914026918231888}
   - component: {fileID: 50861731783550582}
   - component: {fileID: 114715065490265534}
+  - component: {fileID: 114700892653164228}
   m_Layer: 10
   m_Name: MissileBot
   m_TagString: Untagged
@@ -89,6 +90,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &114700892653164228
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1022030481065394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65e2cbf8c86ad460091e6fa16c1aefc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSameFaction: 0
+  targetIneffective: 0
+  ignoresCanBeTarget: 0
 --- !u!114 &114715065490265534
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -123,14 +138,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particlePrefab: {fileID: 1624232523723262, guid: 8896ea1b5f41e4044b434378893a8240,
     type: 2}
+  kind: missileBot
+  canBeTarget: 1
   faction: 1
   health: 40
+  maxHealth: 40
   target: {fileID: 0}
   speedFactor: 0.5
   rotateFactor: 10
   damage: 1
+  waveManager: {fileID: 0}
   enemyCore: {fileID: 0}
   hitPoint: {x: 0, y: 0.4, z: 0}
+  destroyOnInterval: 1
   sensorRange: 30
 --- !u!212 &212536253644944140
 SpriteRenderer:

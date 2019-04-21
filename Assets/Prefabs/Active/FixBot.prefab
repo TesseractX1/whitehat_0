@@ -100,8 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50337c637fbf4a4baa8d5e6724a8199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlePrefab: {fileID: 1624232523723262, guid: 8896ea1b5f41e4044b434378893a8240,
-    type: 2}
+  particlePrefab: {fileID: 0}
   kind: fixBot
   canBeTarget: 1
   faction: 0

@@ -9,6 +9,8 @@
         [SerializeField] protected float range;
         [SerializeField] private bool hitGridLayer;
 
+        [SerializeField] private bool spashHit;
+
         private void Update()
         {
             if (!target)
@@ -23,7 +25,10 @@
             if (GetComponent<UnitTargetSensor>().CanAttack(collision.collider))
             {
                 collision.collider.GetComponent<Unit>().Damage(damage/Time.deltaTime);
-                Hit();
+                if (spashHit)
+                {
+                    Hit();
+                }
             }
         }
 

@@ -19,7 +19,7 @@
 
         protected void Start()
         {
-            GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().unitCount++;
+            GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().UnitCount++;
         }
 
         // Update is called once per frame
@@ -46,7 +46,7 @@
 
         protected void OnDestroy()
         {
-            GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().unitCount--;
+            GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().UnitCount--;
         }
     }
 }
