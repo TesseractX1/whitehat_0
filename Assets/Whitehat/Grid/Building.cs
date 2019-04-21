@@ -58,7 +58,7 @@
             }
         }
 
-        public void ClearLightUp()
+        private void ClearLightUp()
         {
             foreach(Hexagon hex in lightenedUp)
             {
@@ -69,6 +69,7 @@
 
         public void OnDestroy()
         {
+            ClearLightUp();
             if (!player)
             { return; }
                 player.RAM += maintenance;

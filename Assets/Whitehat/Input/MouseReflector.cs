@@ -34,11 +34,18 @@
                 mouseHex = hit.collider.GetComponent<Hexagon>();
                 if (player.onTower)
                 {
-                    mouseBuildingSprite.enabled = TowerRightAngle(player.onTower.transform.position,mouseHex.transform.position);
+                    if (TowerRightAngle(player.onTower.transform.position, mouseHex.transform.position))
+                    {
+                        mouseBuildingSprite.transform.parent = mouseHex.transform;
+                        mouseBuildingSprite.transform.localPosition = Vector3.zero;
+                    }
                     LocateWalls(player.onTower.transform, mouseHex.transform);
-                    towerLines.enabled = TowerRightAngle(player.onTower.transform.position, mouseHex.transform.position);
                 }
-                else { towerLines.enabled = false; }
+                else
+                {
+                    mouseBuildingSprite.transform.parent = mouseHex.transform;
+                    mouseBuildingSprite.transform.localPosition = Vector3.zero;
+                }
 
                 if (Input.GetMouseButtonDown(0) && mouseBuildingPrefab)
                 {
@@ -77,8 +84,6 @@
                     mouseHex.Empty();
                 }
                 if(mouseHex.building){mouseBuildingSprite.color=Color.red;}else{mouseBuildingSprite.color=Color.white;}
-                mouseBuildingSprite.transform.parent = mouseHex.transform;
-                mouseBuildingSprite.transform.localPosition = Vector3.zero;
             }
             else
             {
@@ -86,6 +91,8 @@
             }
 
             mouseBuildingSprite.sprite = mouseBuildingPrefab ? mouseBuildingPrefab.GetComponent<SpriteRenderer>().sprite : null;
+
+            towerLines.enabled = player.onTower;
         }
 
         private bool TowerRightAngle(Vector3 tower1, Vector3 tower2)
@@ -120,19 +127,7 @@
         public void LocateWalls(Transform tower1, Transform tower2)
         {
             towerLines.SetPosition(0, player.onTower.transform.position);
-            towerLines.SetPosition(1, mouseHex.transform.position);
-            float towerDistance = Vector3.Distance(tower2.position, tower1.position);
-            Vector3 direction = (tower2.position - tower1.position).normalized;
-
-            int i = 0;
-            for (float distance = 0; distance <= towerDistance; distance += Building.distance)
-            {
-                towerLines.positionCount = i+1 > towerLines.positionCount ? i+1 : towerLines.positionCount;
-                towerLines.SetPosition(i, tower1.position + direction * distance);
-                i++;
-            }
-            towerLines.positionCount = i + 1;
-            towerLines.SetPosition(i, tower2.transform.position);
+            towerLines.SetPosition(1, mouseBuildingSprite.transform.position);
         }
 
         public void BuildWalls(Transform tower1, Transform tower2)
