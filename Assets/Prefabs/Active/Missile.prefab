@@ -209,6 +209,7 @@ MonoBehaviour:
   range: 10
   hitGridLayer: 0
   spashHit: 1
+  lifeTime: 8
 --- !u!212 &212984963679171050
 SpriteRenderer:
   m_ObjectHideFlags: 1

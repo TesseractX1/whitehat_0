@@ -11,11 +11,19 @@
 
         [SerializeField] private bool spashHit;
 
+        [SerializeField] private float lifeTime;
+
         private void Update()
         {
-            if (!target)
+            if (lifeTime <= 0)
             {
                 Hit();
+            }
+            else { lifeTime -= Time.deltaTime; }
+
+            if (!target)
+            {
+                transform.Translate(Vector3.up * (speedFactor + Random.value * 0.1f * currentVelocity) * Time.deltaTime);
             }
             base.Update();
         }
