@@ -119,12 +119,12 @@ MonoBehaviour:
   kind: superBot
   canBeTarget: 1
   faction: 1
-  health: 40
-  maxHealth: 40
+  health: 160
+  maxHealth: 160
   target: {fileID: 0}
   speedFactor: 0.5
   rotateFactor: 10
-  damage: 1
+  damage: 4
   waveManager: {fileID: 0}
   enemyCore: {fileID: 0}
   hitPoint: {x: 0, y: 0.4, z: 0}

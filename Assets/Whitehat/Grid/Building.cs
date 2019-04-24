@@ -26,8 +26,8 @@
         void Start()
         {
             LightUp(initialRange);
-           
-            if (kind == "RAM")
+
+            if (kind == "RAM" || kind == "core")
             {
                 player.MaxRAM += Mathf.Abs(maintenance);
             }

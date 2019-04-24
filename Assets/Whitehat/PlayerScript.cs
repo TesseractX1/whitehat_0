@@ -39,15 +39,18 @@ namespace Whitehat.Player
         public void TurnOnMarkRAM() { markRAM = true; }
         public void TurnOffMarkRAM() { markRAM = false; }
 
-        // Use this for initialization
-        void Start()
-        {
-
-        }
+        public GameObject core;
+        public GameObject gameOver;
 
         // Update is called once per frame
         void Update()
         {
+            if (!core)
+            {
+                Time.timeScale = 0;
+                gameOver.SetActive(true);
+            }
+
             cpuNum.text = "" + cpu + "+" + productivity + "/" + maxCPU;
             ramNum.text = "" + ram + "/" + maxRAM;
 

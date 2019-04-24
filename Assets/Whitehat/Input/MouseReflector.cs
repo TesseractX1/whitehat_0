@@ -148,6 +148,10 @@
                 if (hit.collider.GetComponent<Hexagon>()&& !hit.collider.GetComponent<Hexagon>().building)
                 {
                     Building built=Build(hit.collider.GetComponent<Hexagon>(), player.wallPrefab, true);
+                    if (!built)
+                    {
+                        return;
+                    }
                     built.transform.eulerAngles = Vector3.forward * angle;
                 }
             }

@@ -140,8 +140,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   unitHit: {fileID: 0}
-  sensorRange: 30
-  damage: 30
+  sensorRange: 20
+  damage: 20
   beamLine: {fileID: 120548385025555730}
 --- !u!120 &120548385025555730
 LineRenderer:

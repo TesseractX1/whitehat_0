@@ -10,6 +10,7 @@
         [SerializeField] private AttackWaveManager waveManager;
 
         [SerializeField] private int unitLimit;
+        public int UnitLimit { get { return unitLimit; } set { unitLimit = value; } }
         public bool generatorsActive;
 
         public List<UnitGenerator> generators;

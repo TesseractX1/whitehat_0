@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UI;
+    using Whitehat.UnitMech;
 
     public class AttackWaveManager : MonoBehaviour
     {
@@ -16,11 +17,8 @@
 
         public bool onWave;
 
-        // Use this for initialization
-        void Start()
-        {
-
-        }
+        public int wave;
+        public GameObject[] generators;
 
         // Update is called once per frame
         void Update()
@@ -28,6 +26,19 @@
             if (stopWatch <= 0)
             {
                 onWave = !onWave;
+                if (onWave)
+                {
+                    wave++;
+                    if (wave < generators.Length) { generators[wave].SetActive(true); }
+                    if (GetComponent<ActiveUnitManager>().UnitLimit <= 600)
+                    {
+                        GetComponent<ActiveUnitManager>().UnitLimit += 25;
+                    }
+                    if (wave > 6)
+                    {
+                        waveLength += 10;
+                    }
+                }
                 stopWatch = onWave ? waveLength : waveInterval;
             }
             else
