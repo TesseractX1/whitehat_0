@@ -23,7 +23,7 @@
         protected List<Hexagon> lightenedUp = new List<Hexagon>();
 
         // Use this for initialization
-        void Start()
+        protected virtual void Start()
         {
             LightUp(initialRange);
 

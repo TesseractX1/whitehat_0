@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114913794657798402}
   m_Layer: 9
   m_Name: EnemyMissile
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -216,6 +216,7 @@ MonoBehaviour:
   range: 10
   hitGridLayer: 0
   spashHit: 0
+  lifeTime: 8
 --- !u!114 &114913794657798402
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -17,7 +17,7 @@
 
         public float sensorRange=30;
 
-        private void Start()
+        public void Start()
         {
             base.Start();
             waveManager = GameObject.FindGameObjectWithTag("ActiveUnitManager").GetComponent<AttackWaveManager>();

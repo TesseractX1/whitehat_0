@@ -4,10 +4,12 @@
     using System.Collections.Generic;
     using UnityEngine;
     using Whitehat.Grid;
+    using Whitehat.ObjectPools;
 
     public class UnitGenerator : MonoBehaviour
     {
         [SerializeField] private ActiveUnitManager manager;
+        [SerializeField] private ObjectPool pool;
 
         [SerializeField] private Transform platform;
         [SerializeField] private GameObject prefab;
@@ -33,7 +35,7 @@
             {
                 for (int i = 0; i < amountPerTime; i++)
                 {
-                    Unit generated=GameObject.Instantiate(prefab, transform.position, transform.rotation, platform).GetComponent<Unit>();
+                    Unit generated=pool.UseAndInit(transform.position, transform.eulerAngles, platform).GetComponent<Unit>();
                     if (generated.GetComponent<Bot>())
                     {
                         generated.GetComponent<Bot>().enemyCore = enemyCore;

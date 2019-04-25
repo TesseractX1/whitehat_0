@@ -4,11 +4,15 @@
     using System.Collections.Generic;
     using UnityEngine;
     using Whitehat.UnitMech;
+    using Whitehat.ObjectPools;
 
     [RequireComponent(typeof(Unit))]
 
     public class MissileTurret : Turret
     {
+        private ObjectPool missilePool;
+        [SerializeField] private string poolName;
+
         [SerializeField] private GameObject missilePrefab;
         [SerializeField] private Vector3[] launchPoints;
 
@@ -16,6 +20,11 @@
         [SerializeField] private int missilePerLaunch;
         private float stopWatch;
         private float turnCount;
+
+        private void Start()
+        {
+            missilePool = GameObject.Find(poolName).GetComponent<ObjectPool>();
+        }
 
         // Update is called once per frame
         void Update()
@@ -37,7 +46,7 @@
 
         private void LaunchMissile(Unit target, int launchPointOrder)
         {
-            Missile newMissile=GameObject.Instantiate(missilePrefab, transform.TransformPoint(launchPoints[launchPointOrder]), transform.rotation).GetComponent<Missile>();
+            Missile newMissile=missilePool.UseAndInit(transform.TransformPoint(launchPoints[launchPointOrder]), transform.eulerAngles).GetComponent<Missile>();
             newMissile.target = target;
             target = GetComponent<UnitTargetSensor>().UpdateTarget(sensorRange, missilePerLaunch * 3, 0.7f);
         }
