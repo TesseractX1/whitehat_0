@@ -42,6 +42,10 @@ namespace Whitehat.Player
         public GameObject core;
         public GameObject gameOver;
 
+        [SerializeField] private KeyCode mortarMarkKey;
+        public GameObject mortarMarkPrefab;
+        public bool onMortarMark;
+
         // Update is called once per frame
         void Update()
         {
@@ -69,6 +73,8 @@ namespace Whitehat.Player
 
             GetComponent<MarkToggleList>().toggles[0] = markCPU;
             GetComponent<MarkToggleList>().toggles[1] = markRAM;
+
+            onMortarMark = Input.GetKey(mortarMarkKey);
         }
     }
 }

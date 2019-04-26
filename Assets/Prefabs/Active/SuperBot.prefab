@@ -119,8 +119,8 @@ MonoBehaviour:
   kind: superBot
   canBeTarget: 1
   faction: 1
-  health: 160
-  maxHealth: 160
+  health: 100
+  maxHealth: 100
   target: {fileID: 0}
   speedFactor: 0.5
   rotateFactor: 10

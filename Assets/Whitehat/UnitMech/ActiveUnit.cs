@@ -57,6 +57,10 @@
 
         public void OnDestroy()
         {
+            if (!GameObject.FindWithTag("ActiveUnitManager"))
+            {
+                return;
+            }
             GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().UnitCount--;
         }
     }

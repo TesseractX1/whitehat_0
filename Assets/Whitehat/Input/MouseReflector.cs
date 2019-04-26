@@ -6,6 +6,7 @@
     using UnityEngine.UI;
     using Whitehat.Grid;
     using Whitehat.Player;
+    using Whitehat.Mechanics;
 
     public class MouseReflector : MonoBehaviour
     {
@@ -29,7 +30,23 @@
         // Update is called once per frame
         void Update()
         {
-            if (Physics.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), mainCamera.transform.forward, out hit) && hit.collider.GetComponent<Hexagon>() && hit.collider.GetComponent<Hexagon>().Visible)
+            bool hasHit = Physics.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), mainCamera.transform.forward, out hit);
+
+            if (player.onMortarMark)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Vector3 position = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                    position.z = 0;
+                    GameObject.Instantiate(player.mortarMarkPrefab, position, Quaternion.identity);
+                }
+                if (Input.GetMouseButtonDown(1) && hasHit && hit.collider.GetComponent<MortarMark>())
+                {
+                    GameObject.Destroy(hit.collider.gameObject);
+                }
+            }
+
+            if (hasHit && hit.collider.GetComponent<Hexagon>() && hit.collider.GetComponent<Hexagon>().Visible)
             {
                 mouseHex = hit.collider.GetComponent<Hexagon>();
                 if (player.onTower)
@@ -47,7 +64,7 @@
                     mouseBuildingSprite.transform.localPosition = Vector3.zero;
                 }
 
-                if (Input.GetMouseButtonDown(0) && mouseBuildingPrefab)
+                if (Input.GetMouseButtonDown(0) && mouseBuildingPrefab&&!player.onMortarMark)
                 {
                     if (player.onTower)
                     {
@@ -79,7 +96,7 @@
                     }
                 }
 
-                if (Input.GetMouseButtonDown(1) && !mouseBuildingPrefab)
+                if (Input.GetMouseButtonDown(1) && !mouseBuildingPrefab && !player.onMortarMark)
                 {
                     mouseHex.Empty();
                 }
@@ -90,7 +107,7 @@
                 mouseHex = null;
             }
 
-            mouseBuildingSprite.sprite = mouseBuildingPrefab ? mouseBuildingPrefab.GetComponent<SpriteRenderer>().sprite : null;
+            mouseBuildingSprite.sprite = (mouseBuildingPrefab&&!player.onMortarMark) ? mouseBuildingPrefab.GetComponent<SpriteRenderer>().sprite : null;
 
             towerLines.enabled = player.onTower;
         }

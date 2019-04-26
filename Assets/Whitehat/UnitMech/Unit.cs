@@ -23,9 +23,11 @@
             }
         }
        
-        public void Damage(float damage)
+        public void Damage(float damage, bool damageOnce=false)
         {
-            health -= damage * Time.deltaTime;
+            print(damage);
+            if (damageOnce) { health -= damage; }
+            else { health -= damage * Time.deltaTime; }
         }
 
         public static float CalculateTorque(Transform self, Transform target, float speedFactor, float adjustment=0)
