@@ -15,6 +15,7 @@
         [SerializeField] private GameObject prefab;
         [SerializeField] private float interval;
         [SerializeField] private float amountPerTime;
+        [SerializeField] private float randomness=1;
 
         private float stopWatch;
 
@@ -31,7 +32,7 @@
         // Update is called once per frame
         void Update()
         {
-            if (stopWatch <= 0)
+            if (stopWatch <= 0&&Random.value<randomness)
             {
                 for (int i = 0; i < amountPerTime; i++)
                 {

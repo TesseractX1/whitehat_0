@@ -7,6 +7,7 @@
     public class Unit : MonoBehaviour
     {
         [SerializeField] protected GameObject particlePrefab;
+        public GameObject ParticlePrefab { get { return particlePrefab; } private set { } }
         public string kind;
 
         public bool canBeTarget=true;
@@ -25,7 +26,6 @@
        
         public void Damage(float damage, bool damageOnce=false)
         {
-            print(damage);
             if (damageOnce) { health -= damage; }
             else { health -= damage * Time.deltaTime; }
         }
