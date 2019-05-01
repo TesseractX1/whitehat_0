@@ -28,15 +28,21 @@
             pool = newPool;
         }
 
-        public void Start()
+        public virtual void Start()
         {
             GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().UnitCount++;
+            health = maxHealth;
         }
 
         // Update is called once per frame
         protected void Update()
         {
             base.Update();
+
+            if (target&&!target.gameObject.activeSelf)
+            {
+                target = null;
+            }
 
             if (!target)
             {
@@ -55,13 +61,19 @@
             transform.Translate(Vector3.up * (currentVelocity + Random.value * 0.1f * currentVelocity) * Time.deltaTime);
         }
 
-        public void OnDestroy()
+        public virtual void OnDestroy()
         {
+            target = null;
             if (!GameObject.FindWithTag("ActiveUnitManager"))
             {
                 return;
             }
             GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().UnitCount--;
+        }
+
+        protected override void Death()
+        {
+            pool.RecycleObject(gameObject);
         }
     }
 }

@@ -40,7 +40,6 @@
 
         public void Hit(Unit hitUnit=null)
         {
-            print(hitUnit);
             if (splashHit)
             {
                 int layerMask = hitGridLayer ? UnitTargetSensor.gridLayer : UnitTargetSensor.unitLayer;
@@ -53,7 +52,10 @@
                     }
                 }
             }
-            hitUnit.Damage(damage / Time.deltaTime);
+            if (hitUnit)
+            {
+                hitUnit.Damage(damage / Time.deltaTime);
+            }
 
             if (Random.value <= 0.3f)
             {

@@ -20,7 +20,7 @@
             health = Mathf.Clamp(health, 0, maxHealth);
             if (health <= 0)
             {
-                GameObject.Destroy(gameObject);
+                Death();
             }
         }
        
@@ -56,6 +56,10 @@
             GameObject.Instantiate(particlePrefab, position, transform.rotation);
         }
 
+        protected virtual void Death()
+        {
+            GameObject.Destroy(gameObject);
+        }
     }
 
     public enum UnitFaction

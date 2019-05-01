@@ -20,7 +20,7 @@
 			GameObject obj = pool.Peek ();
 			obj.transform.position = position;
 			obj.transform.eulerAngles = eulerAngles;
-			obj.transform.parent = null;
+			obj.transform.parent = transform;
 			obj.SetActive (true);
 			obj.GetComponent<PoolObject> ().Start ();
 			return pool.Pop();

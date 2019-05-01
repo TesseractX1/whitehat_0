@@ -119,7 +119,7 @@ MonoBehaviour:
   unitHit: {fileID: 0}
   sensorRange: 30
   damage: 0
-  poolName: WhiteNormalMissile
+  poolName: RedNormalMissile
   missilePrefab: {fileID: 1866263719969916, guid: a5d316f7ac309406490c0d1d7b74cc40,
     type: 2}
   launchPoints:

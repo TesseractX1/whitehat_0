@@ -21,6 +21,11 @@
         // Update is called once per frame
         protected void Update()
         {
+            if (target&&!target.gameObject.activeSelf)
+            {
+                target = null;
+            }
+
             if (GetComponent<ActiveUnit>()) {
                 target = GetComponent<ActiveUnit>().target;
             }
