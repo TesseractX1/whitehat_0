@@ -57,6 +57,10 @@
                         mouseBuildingSprite.transform.localPosition = Vector3.zero;
                     }
                     LocateWalls(player.onTower.transform, mouseHex.transform);
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        player.onTower = null;
+                    }
                 }
                 else
                 {

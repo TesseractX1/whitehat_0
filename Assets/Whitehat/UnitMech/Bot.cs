@@ -50,6 +50,11 @@
                 }
             }
         }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+        }
     }
 
 }

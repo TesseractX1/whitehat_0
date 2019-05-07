@@ -7,7 +7,7 @@
     public class Missile : ActiveUnit
     {
         [SerializeField] private float lifeTime;
-         private float lifeTimeCount;
+        private float lifeTimeCount;
 
         public override void Start()
         {
@@ -34,11 +34,6 @@
         protected override void Move()
         {
             transform.Translate(Vector3.up * (speedFactor + Random.value * 0.1f * speedFactor) * Time.deltaTime);
-        }
-
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
         }
     }
 }

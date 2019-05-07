@@ -30,7 +30,6 @@
 
         public virtual void Start()
         {
-            GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().UnitCount++;
             health = maxHealth;
         }
 
@@ -64,11 +63,6 @@
         public virtual void OnDestroy()
         {
             target = null;
-            if (!GameObject.FindWithTag("ActiveUnitManager"))
-            {
-                return;
-            }
-            GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().UnitCount--;
         }
 
         protected override void Death()

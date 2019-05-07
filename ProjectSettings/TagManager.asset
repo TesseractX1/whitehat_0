@@ -10,6 +10,7 @@ TagManager:
   - Bot
   - Projectile
   - Core
+  - ActiveUnitLayer
   layers:
   - Default
   - TransparentFX

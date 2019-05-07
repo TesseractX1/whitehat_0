@@ -46,7 +46,7 @@
 
         private void LaunchMissile(Unit target, int launchPointOrder)
         {
-            Missile newMissile=missilePool.UseAndInit(transform.TransformPoint(launchPoints[launchPointOrder]), transform.eulerAngles).GetComponent<Missile>();
+            Missile newMissile=missilePool.UseAndInit(transform.TransformPoint(launchPoints[launchPointOrder]), transform.eulerAngles,GameObject.FindWithTag("ActiveUnitLayer").transform).GetComponent<Missile>();
             newMissile.target = target;
             target = GetComponent<UnitTargetSensor>().UpdateTarget(sensorRange, missilePerLaunch * 3, 0.7f);
         }
