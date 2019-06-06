@@ -39,15 +39,22 @@ namespace Whitehat.Player
         public void TurnOnMarkRAM() { markRAM = true; }
         public void TurnOffMarkRAM() { markRAM = false; }
 
-        // Use this for initialization
-        void Start()
-        {
+        public GameObject core;
+        public GameObject gameOver;
 
-        }
+        [SerializeField] private KeyCode mortarMarkKey;
+        public GameObject mortarMarkPrefab;
+        public bool onMortarMark;
 
         // Update is called once per frame
         void Update()
         {
+            if (!core)
+            {
+                Time.timeScale = 0;
+                gameOver.SetActive(true);
+            }
+
             cpuNum.text = "" + cpu + "+" + productivity + "/" + maxCPU;
             ramNum.text = "" + ram + "/" + maxRAM;
 
@@ -66,6 +73,8 @@ namespace Whitehat.Player
 
             GetComponent<MarkToggleList>().toggles[0] = markCPU;
             GetComponent<MarkToggleList>().toggles[1] = markRAM;
+
+            onMortarMark = Input.GetKey(mortarMarkKey);
         }
     }
 }

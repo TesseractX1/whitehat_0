@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114621760119272544}
   m_Layer: 10
   m_Name: SuperBot
-  m_TagString: Untagged
+  m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,12 +119,12 @@ MonoBehaviour:
   kind: superBot
   canBeTarget: 1
   faction: 1
-  health: 40
-  maxHealth: 40
+  health: 100
+  maxHealth: 100
   target: {fileID: 0}
   speedFactor: 0.5
   rotateFactor: 10
-  damage: 1
+  damage: 4
   waveManager: {fileID: 0}
   enemyCore: {fileID: 0}
   hitPoint: {x: 0, y: 0.4, z: 0}

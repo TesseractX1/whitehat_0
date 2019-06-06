@@ -10,6 +10,7 @@
     {
         public static int gridLayer = 513;
         public static int unitLayer = 1025;
+        public static int mortarMarkLayer = 2049;
 
         public bool targetSameFaction = false;
         public bool targetIneffective;
@@ -44,6 +45,10 @@
 
         public bool CanAttack(Collider2D hit)
         {
+            if (!hit.GetComponent<Unit>())
+            {
+                return false;
+            }
             bool factionMatch = hit.GetComponent<Unit>().faction != GetComponent<Unit>().faction;
             if (targetSameFaction)
             {

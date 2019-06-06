@@ -5,8 +5,9 @@
     using System.Collections.Generic;
     using UnityEngine;
     using Whitehat.Grid;
+    using Whitehat.ObjectPools;
 
-    public class ActiveUnit : Unit
+    public class ActiveUnit : Unit, PoolObject
     {
         public Unit target;
 
@@ -17,15 +18,30 @@
         protected float currentVelocity;
         protected float torque;
 
-        protected void Start()
+        private ObjectPool pool;
+        public ObjectPool GetPool()
         {
-            GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().UnitCount++;
+            return pool;
+        }
+        public void SetPool(ObjectPool newPool)
+        {
+            pool = newPool;
+        }
+
+        public virtual void Start()
+        {
+            health = maxHealth;
         }
 
         // Update is called once per frame
         protected void Update()
         {
             base.Update();
+
+            if (target&&!target.gameObject.activeSelf)
+            {
+                target = null;
+            }
 
             if (!target)
             {
@@ -44,9 +60,14 @@
             transform.Translate(Vector3.up * (currentVelocity + Random.value * 0.1f * currentVelocity) * Time.deltaTime);
         }
 
-        protected void OnDestroy()
+        public virtual void OnDestroy()
         {
-            GameObject.FindWithTag("ActiveUnitManager").GetComponent<ActiveUnitManager>().UnitCount--;
+            target = null;
+        }
+
+        protected override void Death()
+        {
+            pool.RecycleObject(gameObject);
         }
     }
 }

@@ -7,6 +7,7 @@
     public class Unit : MonoBehaviour
     {
         [SerializeField] protected GameObject particlePrefab;
+        public GameObject ParticlePrefab { get { return particlePrefab; } private set { } }
         public string kind;
 
         public bool canBeTarget=true;
@@ -19,13 +20,14 @@
             health = Mathf.Clamp(health, 0, maxHealth);
             if (health <= 0)
             {
-                GameObject.Destroy(gameObject);
+                Death();
             }
         }
        
-        public void Damage(float damage)
+        public void Damage(float damage, bool damageOnce=false)
         {
-            health -= damage * Time.deltaTime;
+            if (damageOnce) { health -= damage; }
+            else { health -= damage * Time.deltaTime; }
         }
 
         public static float CalculateTorque(Transform self, Transform target, float speedFactor, float adjustment=0)
@@ -54,6 +56,10 @@
             GameObject.Instantiate(particlePrefab, position, transform.rotation);
         }
 
+        protected virtual void Death()
+        {
+            GameObject.Destroy(gameObject);
+        }
     }
 
     public enum UnitFaction

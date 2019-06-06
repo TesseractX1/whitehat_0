@@ -23,11 +23,11 @@
         protected List<Hexagon> lightenedUp = new List<Hexagon>();
 
         // Use this for initialization
-        void Start()
+        protected virtual void Start()
         {
             LightUp(initialRange);
-           
-            if (kind == "RAM")
+
+            if (kind == "RAM" || kind == "core")
             {
                 player.MaxRAM += Mathf.Abs(maintenance);
             }
@@ -58,7 +58,7 @@
             }
         }
 
-        public void ClearLightUp()
+        private void ClearLightUp()
         {
             foreach(Hexagon hex in lightenedUp)
             {
@@ -69,6 +69,7 @@
 
         public void OnDestroy()
         {
+            ClearLightUp();
             if (!player)
             { return; }
                 player.RAM += maintenance;

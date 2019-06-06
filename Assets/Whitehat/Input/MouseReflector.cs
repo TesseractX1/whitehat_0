@@ -6,6 +6,7 @@
     using UnityEngine.UI;
     using Whitehat.Grid;
     using Whitehat.Player;
+    using Whitehat.Mechanics;
 
     public class MouseReflector : MonoBehaviour
     {
@@ -29,31 +30,64 @@
         // Update is called once per frame
         void Update()
         {
-            if (Physics.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), mainCamera.transform.forward, out hit) && hit.collider.GetComponent<Hexagon>() && hit.collider.GetComponent<Hexagon>().Visible)
+            bool hasHit = Physics.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), mainCamera.transform.forward, out hit);
+
+            if (player.onMortarMark)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Vector3 position = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                    position.z = 0;
+                    GameObject.Instantiate(player.mortarMarkPrefab, position, Quaternion.identity);
+                }
+                if (Input.GetMouseButtonDown(1) && hasHit && hit.collider.GetComponent<MortarMark>())
+                {
+                    GameObject.Destroy(hit.collider.gameObject);
+                }
+            }
+
+            if (hasHit && hit.collider.GetComponent<Hexagon>() && hit.collider.GetComponent<Hexagon>().Visible)
             {
                 mouseHex = hit.collider.GetComponent<Hexagon>();
                 if (player.onTower)
                 {
+                    if (TowerRightAngle(player.onTower.transform.position, mouseHex.transform.position))
+                    {
+                        mouseBuildingSprite.transform.parent = mouseHex.transform;
+                        mouseBuildingSprite.transform.localPosition = Vector3.zero;
+                    }
                     LocateWalls(player.onTower.transform, mouseHex.transform);
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        player.onTower = null;
+                    }
+                }
+                else
+                {
+                    mouseBuildingSprite.transform.parent = mouseHex.transform;
+                    mouseBuildingSprite.transform.localPosition = Vector3.zero;
                 }
 
-                if (Input.GetMouseButtonDown(0) && mouseBuildingPrefab)
+                if (Input.GetMouseButtonDown(0) && mouseBuildingPrefab&&!player.onMortarMark)
                 {
                     if (player.onTower)
                     {
-                        Building secondTower = null;
-                        if (mouseHex.building && mouseHex.building.kind == "tower")
+                        if (TowerRightAngle(player.onTower.transform.position, mouseHex.transform.position))
                         {
-                            secondTower = mouseHex.building;
-                        }
-                        else if (!mouseHex.building)
-                        {
-                            secondTower = Build(mouseHex, player.towerPrefab, true);
-                        }
-                        if (secondTower)
-                        {
-                            BuildWalls(player.onTower.transform, secondTower.transform);
-                            player.onTower = null;
+                            Building secondTower = null;
+                            if (mouseHex.building && mouseHex.building.kind == "tower")
+                            {
+                                secondTower = mouseHex.building;
+                            }
+                            else if (!mouseHex.building)
+                            {
+                                secondTower = Build(mouseHex, player.towerPrefab, true);
+                            }
+                            if (secondTower)
+                            {
+                                BuildWalls(player.onTower.transform, secondTower.transform);
+                                player.onTower = null;
+                            }
                         }
                     }
                     else if (mouseHex.building && mouseHex.building.kind == "tower")
@@ -66,23 +100,31 @@
                     }
                 }
 
-                if (Input.GetMouseButtonDown(1) && !mouseBuildingPrefab)
+                if (Input.GetMouseButtonDown(1) && !mouseBuildingPrefab && !player.onMortarMark)
                 {
                     mouseHex.Empty();
                 }
                 if(mouseHex.building){mouseBuildingSprite.color=Color.red;}else{mouseBuildingSprite.color=Color.white;}
-                mouseBuildingSprite.enabled = true;
-                mouseBuildingSprite.transform.parent = mouseHex.transform;
-                mouseBuildingSprite.transform.localPosition = Vector3.zero;
             }
             else
             {
                 mouseHex = null;
             }
 
-            mouseBuildingSprite.sprite = mouseBuildingPrefab ? mouseBuildingPrefab.GetComponent<SpriteRenderer>().sprite : null;
+            mouseBuildingSprite.sprite = (mouseBuildingPrefab&&!player.onMortarMark) ? mouseBuildingPrefab.GetComponent<SpriteRenderer>().sprite : null;
 
             towerLines.enabled = player.onTower;
+        }
+
+        private bool TowerRightAngle(Vector3 tower1, Vector3 tower2)
+        {
+            Vector3 relativePosition = tower2 - tower1;
+            float positionRatio = relativePosition.x / relativePosition.y;
+
+            return Mathf.Approximately(Mathf.Atan(positionRatio),60*Mathf.Deg2Rad)
+            || Mathf.Approximately(Mathf.Atan(-positionRatio), 60 * Mathf.Deg2Rad)
+            || Mathf.Approximately(Mathf.Atan(positionRatio), 0)
+            || Mathf.Approximately(Mathf.Atan(-positionRatio), 0);
         }
 
         public Building Build(Hexagon hex, GameObject buildingPrefab, bool ignoresTower=false)
@@ -106,23 +148,12 @@
         public void LocateWalls(Transform tower1, Transform tower2)
         {
             towerLines.SetPosition(0, player.onTower.transform.position);
-            towerLines.SetPosition(1, mouseHex.transform.position);
-            float towerDistance = Vector3.Distance(tower2.position, tower1.position);
-            Vector3 direction = (tower2.position - tower1.position).normalized;
-
-            int i = 0;
-            for (float distance = 0; distance <= towerDistance; distance += Building.distance)
-            {
-                towerLines.positionCount = i+1 > towerLines.positionCount ? i+1 : towerLines.positionCount;
-                towerLines.SetPosition(i, tower1.position + direction * distance);
-                i++;
-            }
-            towerLines.positionCount = i + 1;
-            towerLines.SetPosition(i, tower2.transform.position);
+            towerLines.SetPosition(1, mouseBuildingSprite.transform.position);
         }
 
         public void BuildWalls(Transform tower1, Transform tower2)
         {
+            if (player.CPU < player.wallPrefab.GetComponent<Building>().Cost * (towerLines.positionCount - 2)) { return; }
             float angle = 0;
             float positionX = (tower2.position.x - tower1.position.x);
             float positionY = (tower2.position.y - tower1.position.y);
@@ -134,29 +165,16 @@
                 angle += 180;
             }
 
-            Vector3 size = new Vector3(player.wallPrefab.GetComponent<BoxCollider2D>().size.x, player.wallPrefab.GetComponent<BoxCollider2D>().size.y, 0);
-
-
-            if (player.CPU < player.wallPrefab.GetComponent<Building>().Cost * (towerLines.positionCount - 2)) { return; }
-            for (int i=1;i< towerLines.positionCount-1; i++)
-            {
-                //RaycastHit2D hit2D = Physics2D.CircleCast(towerLines.GetPosition(i), 0.1f, Vector3.one, Mathf.Infinity, Unit.gridLayer);
-               // if (hit2D&&hit2D.collider.GetComponent<Building>() && hit2D.collider.GetComponent<Building>().kind=="wall") { continue; }
-
-                RaycastHit[] hits = Physics.SphereCastAll(towerLines.GetPosition(i), 0.1f, Vector3.one);
-                if (hits.Length <= 0) { continue; }
-                Building instance = hits[0].collider.GetComponent<Hexagon>().building;
-                Building wallBuilt=Build(hits[0].collider.GetComponent<Hexagon>(), player.wallPrefab);
-                hits[0].collider.GetComponent<Hexagon>().building = instance;
-                foreach (RaycastHit hit in hits)
+            foreach(RaycastHit hit in Physics.RaycastAll(tower1.position, tower2.position - tower1.position, Vector3.Distance(tower1.position, tower2.position))){
+                if (hit.collider.GetComponent<Hexagon>()&& !hit.collider.GetComponent<Hexagon>().building)
                 {
-                    if (!hit.collider.GetComponent<Hexagon>().building)
+                    Building built=Build(hit.collider.GetComponent<Hexagon>(), player.wallPrefab, true);
+                    if (!built)
                     {
-                        hit.collider.GetComponent<Hexagon>().building = wallBuilt;
+                        return;
                     }
+                    built.transform.eulerAngles = Vector3.forward * angle;
                 }
-                wallBuilt.transform.position = towerLines.GetPosition(i);
-                wallBuilt.transform.eulerAngles = Vector3.forward * angle;
             }
         }
     }

@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - ActiveUnitManager
+  - GeneratorComplex
+  - Building
+  - Bot
+  - Projectile
+  - Core
+  - ActiveUnitLayer
   layers:
   - Default
   - TransparentFX
@@ -17,7 +23,7 @@ TagManager:
   - Hexagons
   - Grid
   - Units
-  - 
+  - MortarTarget
   - 
   - 
   - 

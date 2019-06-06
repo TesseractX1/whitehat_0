@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114700892653164228}
   m_Layer: 10
   m_Name: MissileBot
-  m_TagString: Untagged
+  m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,6 +119,7 @@ MonoBehaviour:
   unitHit: {fileID: 0}
   sensorRange: 30
   damage: 0
+  poolName: RedNormalMissile
   missilePrefab: {fileID: 1866263719969916, guid: a5d316f7ac309406490c0d1d7b74cc40,
     type: 2}
   launchPoints:

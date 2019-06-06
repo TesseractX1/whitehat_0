@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114258025387899642}
   m_Layer: 10
   m_Name: Bot
-  m_TagString: Untagged
+  m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

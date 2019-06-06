@@ -18,15 +18,14 @@
         public float sensorRange;
         public float damage;
 
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
         // Update is called once per frame
         protected void Update()
         {
+            if (target&&!target.gameObject.activeSelf)
+            {
+                target = null;
+            }
+
             if (GetComponent<ActiveUnit>()) {
                 target = GetComponent<ActiveUnit>().target;
             }

@@ -46,7 +46,6 @@
         public void Empty()
         {
             if (!building) { return; }
-            building.ClearLightUp();
             GameObject.Destroy(building.gameObject);
             building = null;
         }

@@ -10,22 +10,18 @@
         [SerializeField] private AttackWaveManager waveManager;
 
         [SerializeField] private int unitLimit;
+        public int UnitLimit { get { return unitLimit; } set { unitLimit = value; } }
         public bool generatorsActive;
 
         public List<UnitGenerator> generators;
         private int unitCount;
-        public int UnitCount { get { return unitCount; } set { unitCount = value; } }
-
-        // Use this for initialization
-        void Start()
-        {
-
-        }
+        public int UnitCount { get { return unitCount; } private set { } }
+        [SerializeField]private Transform activeUnitLayer;
 
         // Update is called once per frame
         void Update()
         {
-            unitCount = Mathf.Max(unitCount, 0);
+            unitCount = activeUnitLayer.childCount;
             generatorsActive = waveManager.onWave && unitCount < unitLimit;
         }
     }

@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114361014204180294}
   m_Layer: 9
   m_Name: MissileTurret
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,14 +109,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   unitHit: {fileID: 0}
-  sensorRange: 30
+  sensorRange: 20
   damage: 0
+  poolName: WhiteNormalMissile
   missilePrefab: {fileID: 1337606159687370, guid: 09431f47922a540b7b8e9dbf65fcdd8b,
     type: 2}
   launchPoints:
   - {x: 1.3, y: 1.5, z: 0}
   - {x: -1.3, y: 1.5, z: 0}
-  frequency: 1
+  frequency: 1.5
   missilePerLaunch: 1
 --- !u!212 &212411048139590098
 SpriteRenderer:
