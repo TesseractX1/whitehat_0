@@ -215,6 +215,7 @@ MonoBehaviour:
   damage: 1
   range: 10
   hitGridLayer: 0
+  spashHit: 0
 --- !u!114 &114913794657798402
 MonoBehaviour:
   m_ObjectHideFlags: 1
